@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root,
+html,
+#root,
+body {
+  height: 100%;
+}
+
+@media print, screen {
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  #pdf-template {
+    background: white !important;
+    color: black !important;
+  }
+
+  #pdf-template * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+#pdf-template {
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
+  color: #333;
+}
+
+#pdf-template table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#pdf-template th,
+#pdf-template td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#pdf-template th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
