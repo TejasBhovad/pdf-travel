@@ -99,6 +99,7 @@ const ItineraryForm = ({ setPdfData }) => {
     formData.adults,
     calculateTotal,
     setPdfData,
+    formData,
   ]);
 
   const updateBasicInfo = (field, value) => {
