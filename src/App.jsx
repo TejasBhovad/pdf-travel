@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ActivityTable from "./components/activity-table";
 import { PDFGenerator } from "./utils/pdf-generator";
 import PDFDocument from "./components/pdf-document";
 const App = () => {
@@ -73,7 +74,7 @@ const App = () => {
       template,
       NodeFilter.SHOW_TEXT,
       null,
-      false
+      false,
     );
 
     const textNodes = [];
@@ -127,33 +128,33 @@ const App = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gray-100">
+    <div className="min-h-screen w-full bg-gray-100">
       {/* Control Panel */}
-      <div className="bg-white shadow-md p-6 mb-6">
-        <h1 className="text-2xl font-bold mb-4">PDF Generator Demo</h1>
+      <div className="mb-6 bg-white p-6 shadow-md">
+        <h1 className="mb-4 text-2xl font-bold">PDF Generator Demo</h1>
 
         {/* Form Controls */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="mb-1 block text-sm font-medium">
               Invoice Number
             </label>
             <input
               type="text"
               value={pdfData.invoiceNumber}
               onChange={(e) => updateField("invoiceNumber", e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full rounded border border-gray-300 p-2"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="mb-1 block text-sm font-medium">
               Customer Name
             </label>
             <input
               type="text"
               value={pdfData.customer.name}
               onChange={(e) => updateField("customer.name", e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full rounded border border-gray-300 p-2"
             />
           </div>
         </div>
@@ -161,14 +162,14 @@ const App = () => {
         <button
           onClick={generatePDF}
           disabled={isGenerating}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
         >
           {isGenerating ? "Generating PDF..." : "Generate PDF"}
         </button>
       </div>
 
       {/* preview */}
-      <div className="max-w-4xl mx-auto bg-white shadow-lg">
+      <div className="mx-auto max-w-4xl bg-white shadow-lg">
         <PDFDocument data={pdfData} />
       </div>
 

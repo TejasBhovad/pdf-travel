@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand: #541c9c; /* CTA BUTTONS, NON CTA BUTTONS */
+  --color-brand-hover: #680099; /* HOVER EFFECT, STROKE GRADIENT PURPLE */
+  --color-accent: #936fe0; /* RANGE BAR, TOUR CARD, GRADIENT FILL */
+  --color-deep: #321e5d; /* BUTTON ICONS, BOX FILL */
+  --color-pale: #fbf4ff; /* SCROLLBAR, TITLE FILL, CHAT COLOR */
+}
+
 :root,
 html,
 #root,

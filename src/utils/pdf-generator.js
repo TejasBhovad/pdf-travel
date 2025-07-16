@@ -239,7 +239,9 @@ export class PDFGenerator {
         if (value) {
           target.style.setProperty(prop, value);
         }
-      } catch (e) {}
+      } catch (e) {
+        console.warn(`Failed to copy style ${prop}:`, e);
+      }
     });
   }
 
