@@ -57,7 +57,7 @@ export class PDFGenerator {
 
         const ratio = Math.min(
           contentWidth / imgWidth,
-          contentHeight / imgHeight
+          contentHeight / imgHeight,
         );
         const scaledWidth = imgWidth * ratio;
         const scaledHeight = imgHeight * ratio;
@@ -71,7 +71,7 @@ export class PDFGenerator {
             scaledWidth,
             scaledHeight,
             undefined,
-            "FAST"
+            "FAST",
           );
         } else {
           let remainingHeight = scaledHeight;
@@ -96,7 +96,7 @@ export class PDFGenerator {
               undefined,
               "FAST",
               0,
-              sourceY
+              sourceY,
             );
 
             remainingHeight -= contentHeight;
@@ -148,7 +148,7 @@ export class PDFGenerator {
         element,
         NodeFilter.SHOW_ELEMENT,
         null,
-        false
+        false,
       );
 
       let currentPage = document.createElement("div");
@@ -248,7 +248,7 @@ export class PDFGenerator {
   async generateFromTemplate(
     templateData,
     templateId,
-    filename = "document.pdf"
+    filename = "document.pdf",
   ) {
     const renderedElement = this.renderTemplate(templateData, templateId);
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -273,7 +273,7 @@ export class PDFGenerator {
       element,
       NodeFilter.SHOW_TEXT,
       null,
-      false
+      false,
     );
 
     const textNodes = [];

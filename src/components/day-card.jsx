@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const DayCard = ({
   day = "Day 1",
@@ -17,14 +17,51 @@ const DayCard = ({
     ],
   },
 }) => {
+  const canvasRef = useRef(null);
+  const [rotatedTextSrc, setRotatedTextSrc] = React.useState("");
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    canvas.width = 60;
+    canvas.height = 120;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = "18px Arial";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(day, 0, 0);
+    ctx.restore();
+
+    setRotatedTextSrc(canvas.toDataURL());
+  }, [day]);
+
   return (
     <div className="w-full border-b border-gray-200 bg-white px-4 py-6 md:px-0">
+      <canvas ref={canvasRef} style={{ display: "none" }} />
+
       <div className="mx-auto flex max-w-6xl items-start gap-6">
         <div className="flex flex-shrink-0 items-center justify-center">
-          <div className="bg-brand transform rounded-full px-1 py-32 text-lg font-bold text-white shadow-lg">
-            <span className="inline-block -rotate-90 whitespace-nowrap">
-              {day}
-            </span>
+          <div className="bg-brand flex items-center justify-center rounded-full px-0 py-20 text-lg font-bold text-white shadow-lg">
+            {rotatedTextSrc ? (
+              <img
+                src={rotatedTextSrc}
+                alt={day}
+                className="h-auto w-auto"
+                style={{ maxHeight: "120px", maxWidth: "60px" }}
+              />
+            ) : (
+              <span className="inline-block -rotate-90 whitespace-nowrap">
+                {day}
+              </span>
+            )}
           </div>
         </div>
 

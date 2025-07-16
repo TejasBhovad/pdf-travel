@@ -14,9 +14,13 @@ const PDFDocument = ({ data = {} }) => {
 
   return (
     <div id="pdf-content" className="mx-auto max-w-4xl bg-white p-8">
-      <div className="pdf-page h-screen border-2 border-red-600 p-4">
-        <div className="flex h-24 w-full items-center justify-center">
-          <img src="/logo.png" alt="Logo" className="h-full w-auto" />
+      <div className="pdf-page h-screen p-4">
+        <div className="flex h-24 w-full items-center justify-center pb-4">
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="h-full w-auto translate-x-3"
+          />
         </div>
         <section className="flex h-auto w-full flex-col gap-4">
           <div className="from-brand to-accent h-auto w-full rounded-xl bg-gradient-to-r p-4">
@@ -75,7 +79,7 @@ const PDFDocument = ({ data = {} }) => {
       </div>
 
       <div className="page-break"></div>
-      <div className="pdf-page h-screen border-2 border-red-600 p-4">
+      <div className="pdf-page h-screen p-4">
         <DayCard />
         <section className="mt-4 flex h-auto w-full flex-col gap-4">
           <span className="text-deep text-2xl font-semibold">
@@ -164,7 +168,7 @@ const PDFDocument = ({ data = {} }) => {
         </section>
       </div>
       <div className="page-break"></div>
-      <div className="pdf-page h-screen border-2 border-red-600 p-4">
+      <div className="pdf-page h-screen p-4">
         <div className="flex h-auto w-full flex-col gap-3">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <section className="border-brand/25 flex h-auto w-full rounded-2xl border-[1.5px] p-4">
@@ -408,6 +412,129 @@ const PDFDocument = ({ data = {} }) => {
             View Full Terms & Conditions
           </a>
         </section>
+      </div>
+
+      <div className="page-break"></div>
+
+      <div className="pdf-page h-screen p-4">
+        <section className="mt-2 flex h-auto w-full flex-col gap-2">
+          <span className="text-deep mb-1 text-xl font-semibold">
+            Payment Plan
+          </span>
+          <div className="border-accent/25 w-full overflow-hidden rounded-sm border">
+            <div className="flex">
+              <span className="text-pale bg-brand flex min-w-1/4 items-center px-4 text-sm font-semibold">
+                Total Amount
+              </span>
+              <div className="border-l-brand h-0 w-0 border-t-[20px] border-b-[20px] border-l-[20px] border-t-transparent border-b-transparent p-0"></div>
+              <span className="text-deep flex w-full items-center gap-1 bg-white px-4 text-sm font-semibold">
+                <strong>₹ 9,00,000 </strong> for 3 pax (inclusive of GST)
+              </span>
+            </div>
+          </div>
+          <div className="border-accent/25 w-full overflow-hidden rounded-sm border">
+            <div className="flex">
+              <span className="text-pale bg-brand flex min-w-1/4 items-center px-4 text-sm font-semibold">
+                TCS
+              </span>
+              <div className="border-l-brand h-0 w-0 border-t-[20px] border-b-[20px] border-l-[20px] border-t-transparent border-b-transparent p-0"></div>
+              <span className="text-deep flex w-full items-center gap-1 bg-white px-4 text-sm font-semibold">
+                Not Collected
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-4 flex h-auto w-full flex-col gap-2">
+          <span className="text-deep mb-1 text-xl font-semibold">
+            Payment Plan
+          </span>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse rounded-lg border border-gray-200 bg-white text-sm shadow">
+              <thead>
+                <tr className="bg-brand text-white">
+                  <th className="p-2 text-left font-semibold">Installment</th>
+                  <th className="p-2 text-left font-semibold">Amount</th>
+                  <th className="p-2 text-left font-semibold">Due Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b last:border-b-0 hover:bg-gray-50">
+                  <td className="p-2">Installment 1</td>
+                  <td className="p-2">₹ 50,000</td>
+                  <td className="p-2">Initial Payment</td>
+                </tr>
+                <tr className="border-b last:border-b-0 hover:bg-gray-50">
+                  <td className="p-2">Installment 2</td>
+                  <td className="p-2">₹ 40,000</td>
+                  <td className="p-2">Post Visa Approval</td>
+                </tr>
+                <tr className="hover:bg-gray-50">
+                  <td className="p-2">Installment 3</td>
+                  <td className="p-2">Remaining</td>
+                  <td className="p-2">20 Days Before Departure</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="mt-4 flex h-auto w-full flex-col gap-2">
+          <span className="text-deep mb-1 text-xl font-semibold">
+            Visa Details
+          </span>
+          <div className="border-accent/25 w-full overflow-hidden rounded-sm border">
+            <div className="flex">
+              <span className="text-pale bg-brand flex min-w-1/5 items-center px-4 text-sm font-semibold">
+                Visa Type
+              </span>
+              <div className="border-l-brand h-0 w-0 border-t-[20px] border-b-[20px] border-l-[20px] border-t-transparent border-b-transparent p-0"></div>
+              <span className="text-deep flex w-full items-center gap-1 bg-white px-4 text-sm font-semibold">
+                Tourist
+              </span>
+            </div>
+          </div>
+          <div className="border-accent/25 w-full overflow-hidden rounded-sm border">
+            <div className="flex">
+              <span className="text-pale bg-brand flex min-w-1/5 items-center px-4 text-sm font-semibold">
+                Validity
+              </span>
+              <div className="border-l-brand h-0 w-0 border-t-[20px] border-b-[20px] border-l-[20px] border-t-transparent border-b-transparent p-0"></div>
+              <span className="text-deep flex w-full items-center gap-1 bg-white px-4 text-sm font-semibold">
+                30 Days
+              </span>
+            </div>
+          </div>
+          <div className="border-accent/25 w-full overflow-hidden rounded-sm border">
+            <div className="flex">
+              <span className="text-pale bg-brand flex min-w-1/5 items-center px-4 text-sm font-semibold">
+                Processing Date
+              </span>
+              <div className="border-l-brand h-0 w-0 border-t-[20px] border-b-[20px] border-l-[20px] border-t-transparent border-b-transparent p-0"></div>
+              <span className="text-deep flex w-full items-center gap-1 bg-white px-4 text-sm font-semibold">
+                14/06/2025
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <footer className="mt-4 flex w-full flex-col items-center justify-center gap-1 rounded-sm border-t border-gray-200 p-2 text-xs text-gray-600">
+          <div className="flex w-full items-center justify-between">
+            <div className="flex flex-col">
+              <span className="font-semibold">Registered Office:</span>
+              <span>Hd-109 Cinnabar Hills,</span>
+              <span>Links Business Park, Karnataka, India.</span>
+            </div>
+            <div className="flex flex-col items-end">
+              <span>Phone: +91-99X9999999</span>
+              <span>Email ID: Contact@Vigovia.com</span>
+            </div>
+          </div>
+          <div className="mt-2 flex w-full items-center justify-between">
+            <span className="font-bold">Vigovia Tech Pvt. Ltd</span>
+            <span className="font-bold">PLAN.PACK.GO</span>
+          </div>
+        </footer>
       </div>
     </div>
   );
