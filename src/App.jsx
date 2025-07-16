@@ -1,7 +1,21 @@
 import { useState } from "react";
-import ActivityTable from "./components/activity-table";
 import { PDFGenerator } from "./utils/pdf-generator";
+import ItineraryForm from "./components/itenerary-form";
 import PDFDocument from "./components/pdf-document";
+
+// Lucide Icons
+import {
+  Book,
+  Calendar,
+  User,
+  DollarSign,
+  MapPin,
+  FileText,
+  Loader2,
+  FileDown,
+  ClipboardList,
+} from "lucide-react";
+
 const App = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [pdfData, setPdfData] = useState({
@@ -23,26 +37,13 @@ const App = () => {
       zip: "67890",
       email: "john@example.com",
     },
-    items: [
-      {
-        description: "Web Development Services",
-        quantity: 40,
-        rate: 100,
-        amount: 4000,
-      },
-      {
-        description: "Design Consultation",
-        quantity: 10,
-        rate: 150,
-        amount: 1500,
-      },
-    ],
-    subtotal: 5500,
+    items: [],
+    subtotal: 0,
     taxRate: 8.5,
-    tax: 467.5,
-    total: 5967.5,
-    notes: "Payment terms: Net 30 days",
-    additionalTerms: "Custom terms and conditions for this project.",
+    tax: 0,
+    total: 0,
+    notes: "",
+    additionalTerms: "",
   });
 
   const generatePDF = async () => {
@@ -51,7 +52,6 @@ const App = () => {
       const template = document.getElementById("pdf-template");
       template.style.display = "block";
 
-      populateTemplate(template, pdfData);
       const generator = new PDFGenerator({
         format: "a4",
         orientation: "portrait",
@@ -59,7 +59,7 @@ const App = () => {
         quality: 2,
       });
 
-      await generator.generatePDF("pdf-template", "invoice.pdf");
+      await generator.generatePDF("pdf-template", "itinerary.pdf");
       template.style.display = "none";
     } catch (error) {
       console.error("Error generating PDF:", error);
@@ -69,111 +69,52 @@ const App = () => {
     }
   };
 
-  const populateTemplate = (template, data) => {
-    const walker = document.createTreeWalker(
-      template,
-      NodeFilter.SHOW_TEXT,
-      null,
-      false,
-    );
-
-    const textNodes = [];
-    let node;
-    while ((node = walker.nextNode())) {
-      textNodes.push(node);
-    }
-
-    textNodes.forEach((textNode) => {
-      let text = textNode.textContent;
-      text = text.replace(/\{\{([^}]+)\}\}/g, (match, field) => {
-        const value = getNestedValue(data, field.trim());
-        return value !== undefined ? value : match;
-      });
-      textNode.textContent = text;
-    });
-    const itemsContainer = template.querySelector("#items-container");
-    if (itemsContainer && data.items) {
-      itemsContainer.innerHTML = "";
-      data.items.forEach((item) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td class="border border-gray-300 p-3">${item.description}</td>
-          <td class="border border-gray-300 p-3 text-right">${item.quantity}</td>
-          <td class="border border-gray-300 p-3 text-right">$${item.rate}</td>
-          <td class="border border-gray-300 p-3 text-right">$${item.amount}</td>
-        `;
-        itemsContainer.appendChild(row);
-      });
-    }
-  };
-
-  const getNestedValue = (obj, path) => {
-    return path.split(".").reduce((current, key) => {
-      return current && current[key] !== undefined ? current[key] : undefined;
-    }, obj);
-  };
-
-  const updateField = (path, value) => {
-    const newData = { ...pdfData };
-    const keys = path.split(".");
-    let current = newData;
-
-    for (let i = 0; i < keys.length - 1; i++) {
-      if (!current[keys[i]]) current[keys[i]] = {};
-      current = current[keys[i]];
-    }
-
-    current[keys[keys.length - 1]] = value;
-    setPdfData(newData);
-  };
-
   return (
-    <div className="min-h-screen w-full bg-gray-100">
-      {/* Control Panel */}
-      <div className="mb-6 bg-white p-6 shadow-md">
-        <h1 className="mb-4 text-2xl font-bold">PDF Generator Demo</h1>
+    <div className="min-h-screen">
+      {/* Header */}
+      <header className="border-accent/20 border-b-2 bg-white">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="flex items-center justify-between py-6">
+            <div className="flex items-center space-x-4">
+              <div className="bg-brand flex h-12 w-12 items-center justify-center rounded-xl">
+                <Book className="h-7 w-7 text-white" />
+              </div>
+              <div>
+                <h1 className="text-deep text-3xl font-bold">Travel Planner</h1>
+                <p className="text-brand text-sm font-medium">
+                  Plan your perfect journey
+                </p>
+              </div>
+            </div>
 
-        {/* Form Controls */}
-        <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div>
-            <label className="mb-1 block text-sm font-medium">
-              Invoice Number
-            </label>
-            <input
-              type="text"
-              value={pdfData.invoiceNumber}
-              onChange={(e) => updateField("invoiceNumber", e.target.value)}
-              className="w-full rounded border border-gray-300 p-2"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium">
-              Customer Name
-            </label>
-            <input
-              type="text"
-              value={pdfData.customer.name}
-              onChange={(e) => updateField("customer.name", e.target.value)}
-              className="w-full rounded border border-gray-300 p-2"
-            />
+            <button
+              onClick={generatePDF}
+              disabled={isGenerating}
+              className="bg-brand flex items-center space-x-2 rounded-xl px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-[#680099] disabled:opacity-50"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>Generating...</span>
+                </>
+              ) : (
+                <>
+                  <FileDown className="h-5 w-5" />
+                  <span>Export PDF</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
+      </header>
 
-        <button
-          onClick={generatePDF}
-          disabled={isGenerating}
-          className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
-        >
-          {isGenerating ? "Generating PDF..." : "Generate PDF"}
-        </button>
-      </div>
+      <main className="mx-auto max-w-6xl px-6 py-8">
+        <div className="grid gap-8">
+          <ItineraryForm setPdfData={setPdfData} />
+        </div>
+      </main>
 
-      {/* preview */}
-      <div className="mx-auto max-w-4xl bg-white shadow-lg">
-        <PDFDocument data={pdfData} />
-      </div>
-
-      {/* hidden scene used to render pdfs */}
+      {/* Hidden PDF Template */}
       <div id="pdf-template" style={{ display: "none" }}>
         <PDFDocument data={pdfData} />
       </div>
